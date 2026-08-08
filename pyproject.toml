@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "zig"
+version = "0.1.0"
+description = "A Python graph database SDK."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "chakpy>=0.4.2",
+    "falkordb>=1.0.0",
+    "onnxruntime==1.19.2; sys_platform == 'darwin' and platform_machine == 'x86_64'",
+    "onnxruntime>=1.27.0; sys_platform != 'darwin' or platform_machine != 'x86_64'",
+    "pydantic>=2.0.0",
+    "pymupdf-layout>=1.27.2.3",
+    "pymupdf4llm>=0.0.17,<1.0.0; sys_platform == 'darwin' and platform_machine == 'x86_64'",
+    "pymupdf4llm>=1.0.0; sys_platform != 'darwin' or platform_machine != 'x86_64'",
+    "python-dotenv>=1.0.0",
+    "rich>=13.0.0",
+    "rillpy>=0.1.1",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+]
+
+[tool.uv.sources]
+chakpy = { path = "../chak-ai", editable = true }
+rillpy = { path = "../rill-ai", editable = true }
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/zig"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests", "examples/dpa/tests"]
+pythonpath = ["src"]
